@@ -29,6 +29,8 @@ jobs:
         cache: 'sbt'
     - name: Set up sbt
       uses: sbt/setup-sbt@v1
+    - name: Install Scala Native prerequisites
+      run: sudo apt-get update && sudo apt-get install -y clang libcurl4-openssl-dev libidn2-dev
     - name: Run tests
       run: sbt test
       # Optional: This step uploads information to the GitHub dependency graph and unblocking Dependabot alerts for the repository

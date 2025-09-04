@@ -45,7 +45,7 @@ class HttpSuite extends AnyFunSuite {
     val result = mockClient.fetchData()
     assert(result.isRight)
     intercept[TestFailedException] {
-      assert(result.getOrElse(List.empty).isEmpty)
+      assert(result.getOrElse(List.empty).nonEmpty)
     }
   }
 

@@ -21,3 +21,14 @@ Thumbs.db
 .blobs/
 .bloop/
 project/.bloop/
+docs/target/
+docs/.bloop/
+docs/.cache/
+docs/.idea/
+docs/.vscode/
+docs/.bsp/
+docs/.metals/
+docs/.blobs/
+docs/project/target/
+docs/out/
+project/project/target/

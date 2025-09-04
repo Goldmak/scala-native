@@ -43,7 +43,7 @@ jobs:
       with:
         args: >
           -Dsonar.organization=goldmak
-          -Dsonar.projectKey=scala-native
+          -Dsonar.projectKey=Goldmak_scala-native
           -Dsonar.sources=src
       # Optional: This step uploads information to the GitHub dependency graph and unblocking Dependabot alerts for the repository
     - name: Upload dependency graph

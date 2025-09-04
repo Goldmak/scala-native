@@ -12,6 +12,9 @@ lazy val docs = (project in file("."))
     laikaTheme := laika.helium.Helium.defaults.site.
     topNavigationBar(
         homeLink = IconLink.internal(Root / "index.md",HeliumIcon.home),
+      navLinks = Seq(
+        IconLink.internal(Root / "course-modules.md", HeliumIcon.info),
+      ),
       highContrast = true
     ).build
   )

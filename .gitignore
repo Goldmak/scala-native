@@ -1,0 +1,23 @@
+# Scala/SBT specific
+.bsp/
+.idea/
+.metals/
+.sbt-launch-dir/
+.scalafmt.conf
+.vscode/
+*.class
+*.log
+*.pyc
+*.swp
+*~
+/project/project/
+/project/target/
+/target/
+build.sbt.lock
+out/
+# OS-specific
+.DS_Store
+Thumbs.db
+.blobs/
+.bloop/
+project/.bloop/

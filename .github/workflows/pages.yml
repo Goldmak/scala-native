@@ -22,6 +22,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'sbt'
+      - name: Set up sbt
+        uses: sbt/setup-sbt@v1
       - name: Build Site with Laika
         run: cd docs && sbt laikaSite
       - name: Setup Pages

@@ -1,0 +1,1 @@
+addSbtPlugin("org.planet42" % "laika-sbt" % "1.0.0")

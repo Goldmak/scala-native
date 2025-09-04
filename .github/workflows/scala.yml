@@ -36,10 +36,15 @@ jobs:
     - name: Run tests
       run: sbt test
     - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2.1.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: sbt -Dsonar.organization=goldmak -Dsonar.projectKey=scala-native sonarqube
+      with:
+        args: >
+          -Dsonar.organization=goldmak
+          -Dsonar.projectKey=scala-native
+          -Dsonar.sources=src
       # Optional: This step uploads information to the GitHub dependency graph and unblocking Dependabot alerts for the repository
     - name: Upload dependency graph
       uses: scalacenter/sbt-dependency-submission@v3

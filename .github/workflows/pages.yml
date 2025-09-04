@@ -23,7 +23,7 @@ jobs:
           distribution: 'temurin'
           cache: 'sbt'
       - name: Build Site with Laika
-        run: sbt -f docs/build.sbt laikaSite
+        run: cd docs && sbt laikaSite
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

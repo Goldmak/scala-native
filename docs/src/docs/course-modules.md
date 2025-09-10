@@ -1,1 +1,31 @@
-# Course: \"Scala: from Native Applications to Blockchain\"\n\n## ✅ Module 1: Scala Basics and Native Compilation\n*   \\[x\\] Scala philosophy and platform (JVM/Native).\n*   \\[x\\] Environment setup (JDK, sbt, clang, system libraries).\n*   \\[x\\] Project building with sbt and dependency management.\n*   \\[x\\] Compilation to native executable file with Scala Native.\n*   \\[x\\] Basic syntax, case class, match, Option and Either handling.\n*   \\[x\\] Using sttp for http work, parsing and serialization through circe-generic.\n\n## ✅ Module 2: Advanced Testing and Code Quality\n*   \\[x\\] Unit testing: Deep dive into ScalaTest (assert, ignore, intercept).\n*   \\[x\\] Mocking: Writing a \"manual\" mock for test isolation.\n*   \\[x\\] E2E (End-to-End) testing: Our test with realClient is essentially a simple E2E test, as it checks the entire chain from client to real server.\n*   \\[x\\] Static code analysis: Integration with SonarCloud via GitHub Actions.\n\n## ✅ Module 3: CI/CD, Security and Containerization\n*   \\[x\\] CI/CD with GitHub Actions: Automatic build and test execution.\n*   \\[x\\] Security testing: Dependabot.yml and sbt-dependency-submission are configured, which monitor vulnerabilities in dependencies.\n*   \\[x\\] Containerization with Docker: Writing Dockerfile and publishing image to Docker Hub.\n*   \\[x\\] Creating indicators based on badges.\n\n## Module 4: Asynchronous Programming and Data Processing\n*   \\[ \\] Asynchrony with Future: How to perform long operations without blocking the program.\n*   \\[ \\] Working with databases: Connecting to PostgreSQL with Doobie.\n*   \\[ \\] Working with message queues: Apache Kafka basics.\n\n## Module 5: Diving into Blockchain on Scala\n*   \\[ \\] Waves client on Scala.\n*   \\[ \\] Blockchain framework (Scorex).\n*   \\[ \\] EVM client on Scala (Mantis).
+# Course: "Scala: from Native Applications to Blockchain"
+
+## ✅ Module 1: Scala Basics and Native Compilation
+*   \[x\] Scala philosophy and platform (JVM/Native).
+*   \[x\] Environment setup (JDK, sbt, clang, system libraries).
+*   \[x\] Project building with sbt and dependency management.
+*   \[x\] Compilation to native executable file with Scala Native.
+*   \[x\] Basic syntax, case class, match, Option and Either handling.
+*   \[x\] Using sttp for http work, parsing and serialization through circe-generic.
+
+## ✅ Module 2: Advanced Testing and Code Quality
+*   \[x\] Unit testing: Deep dive into ScalaTest (assert, ignore, intercept).
+*   \[x\] Mocking: Writing a "manual" mock for test isolation.
+*   \[x\] E2E (End-to-End) testing: Our test with realClient is essentially a simple E2E test, as it checks the entire chain from client to real server.
+*   \[x\] Static code analysis: Integration with SonarCloud via GitHub Actions.
+
+## ✅ Module 3: CI/CD, Security and Containerization
+*   \[x\] CI/CD with GitHub Actions: Automatic build and test execution.
+*   \[x\] Security testing: Dependabot.yml and sbt-dependency-submission are configured, which monitor vulnerabilities in dependencies.
+*   \[x\] Containerization with Docker: Writing Dockerfile and publishing image to Docker Hub.
+*   \[x\] Creating indicators based on badges.
+
+## Module 4: Asynchronous Programming and Data Processing
+*   \[ \] Asynchrony with Future: How to perform long operations without blocking the program.
+*   \[ \] Working with databases: Connecting to PostgreSQL with Doobie.
+*   \[ \] Working with message queues: Apache Kafka basics.
+
+## Module 5: Diving into Blockchain on Scala
+*   \[ \] Waves client on Scala.
+*   \[ \] Blockchain framework (Scorex).
+*   \[ \] EVM client on Scala (Mantis).

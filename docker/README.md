@@ -11,18 +11,6 @@ This is the recommended approach for Docker Hub publishing. It clones the reposi
 docker build -t scala-native-hello .
 ```
 
-**Pros:**
-- Fully self-contained, only requires Docker
-- Perfect for Docker Hub automated builds
-- Always builds from the latest source code in the repository
-- Reproducible builds anywhere
-- No dependency on local build artifacts
-
-**Cons:**
-- Longer build time (needs to clone repo and build)
-- Requires internet access during build
-- Larger image size due to build dependencies
-
 ### 2. Pre-built Executable (`Dockerfile.simple`)
 This approach uses a pre-built executable that you compile locally.
 
@@ -36,17 +24,6 @@ Then build the Docker image:
 docker build -t scala-native-hello -f Dockerfile.simple .
 ```
 
-**Pros:**
-- Fastest build time
-- Smallest image size
-- Works without internet during Docker build
-
-**Cons:**
-- Requires local build step first
-- Not suitable for Docker Hub automated builds
-- Not reproducible without the local environment
-- Dependent on local build artifacts
-
 ## Running the Docker Container
 
 After building any of the images, you can run the application in a container:
@@ -59,6 +36,20 @@ Or with docker-compose:
 
 ```bash
 docker-compose -f docker-compose.yml run --rm scala-native-app
+```
+
+## Pulling the Published Image
+
+After the image is published to Docker Hub, you can pull it directly:
+
+```bash
+docker pull goodmak/scala-native-hello:main
+```
+
+Then run it:
+
+```bash
+docker run --rm goodmak/scala-native-hello:main
 ```
 
 ## Docker Hub Publishing Recommendation

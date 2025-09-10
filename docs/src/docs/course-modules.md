@@ -13,12 +13,17 @@
 *   \[x\] Mocking: Writing a "manual" mock for test isolation.
 *   \[x\] E2E (End-to-End) testing: Our test with realClient is essentially a simple E2E test, as it checks the entire chain from client to real server.
 *   \[x\] Static code analysis: Integration with SonarCloud via GitHub Actions.
+*   \[ \] Using automated tests to gate a Pull Request.
 
 ## ✅ Module 3: CI/CD, Security and Containerization
 *   \[x\] CI/CD with GitHub Actions: Automatic build and test execution.
 *   \[x\] Security testing: Dependabot.yml and sbt-dependency-submission are configured, which monitor vulnerabilities in dependencies.
-*   \[x\] Containerization with Docker: Writing Dockerfile and publishing image to Docker Hub.
+*   \[x\] Containerization with Docker: Moving artefacts to Dockerfile for local testing.
+*   \[x\] Containerization with Docker: Writing a full Dockerfile and publishing image to Docker Hub.
+*   \[x\] Using docker compose for local Dockerfile building.
 *   \[x\] Creating indicators based on badges.
+*   \[x\] Frontend based MD: Integration with Laika via GitHub Actions.
+*   \[x\] Projects separation approach for backend/frontend.
 
 ## Module 4: Asynchronous Programming and Data Processing
 *   \[ \] Asynchrony with Future: How to perform long operations without blocking the program.

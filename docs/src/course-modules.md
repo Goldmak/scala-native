@@ -1,29 +1,36 @@
-# Курс: "Scala: от нативных приложений до блокчейна"
+# Course: "Scala SDET: from Native Applications to Blockchain"
 
-## ✅ Модуль 1: Основы Scala и Нативная Компиляция
-*   [x] Философия Scala и платформа (JVM/Native).
-*   [x] Настройка окружения (JDK, sbt, clang, системные библиотеки).
-*   [x] Сборка проекта с sbt и управление зависимостями.
-*   [x] Компиляция в нативный исполняемый файл с Scala Native.
-*   [x] Базовый синтаксис, case class, match, обработка Option и Either.
+## ✅ Module 1: Scala Basics and Native Compilation
+*   \[x\] Scala philosophy and platform (JVM/Native).
+*   \[x\] Environment setup (JDK, sbt, clang, system libraries).
+*   \[x\] Project building with sbt and dependency management.
+*   \[x\] Compilation to native executable file with Scala Native.
+*   \[x\] Basic syntax, case class, match, Option and Either handling.
+*   \[x\] Using sttp for http work, parsing and serialization through circe-generic.
 
-## ✅ Модуль 2: Продвинутое Тестирование и Качество Кода
-*   [x] Unit-тестирование: Глубокое погружение в ScalaTest (assert, ignore, intercept).
-*   [x] Мокинг (Mocking): Написание "ручного" мока для изоляции тестов.
-*   [x] E2E (End-to-End) тестирование: Наш тест с realClient по сути является простым E2E тестом, так как он проверяет всю цепочку от клиента до реального сервера.
-*   [x] Статический анализ кода: Интеграция с SonarCloud через GitHub Actions.
+## ✅ Module 2: Advanced Testing and Code Quality
+*   \[x\] Unit testing: Deep dive into ScalaTest (assert, ignore, intercept).
+*   \[x\] Mocking: Writing a "manual" mock for test isolation.
+*   \[x\] E2E (End-to-End) testing: Our test with realClient is essentially a simple E2E test, as it checks the entire chain from client to real server.
+*   \[x\] Static code analysis: Integration with SonarCloud via GitHub Actions.
+*   \[ \] Using automated tests to gate a Pull Request.
 
-## ✅ Модуль 3: CI/CD, Безопасность и Контейнеризация
-*   [x] CI/CD с GitHub Actions: Автоматическая сборка и запуск тестов.
-*   [x] Тестирование безопасности: Настроен dependabot.yml и sbt-dependency-submission, которые следят за уязвимостями в зависимостях.
-*   [ ] Контейнеризация с Docker: Написание Dockerfile и публикация образа. (Это наш следующий логичный шаг в этом блоке).
+## ✅ Module 3: CI/CD, Security and Containerization
+*   \[x\] CI/CD with GitHub Actions: Automatic build and test execution.
+*   \[x\] Security testing: Dependabot.yml and sbt-dependency-submission are configured, which monitor vulnerabilities in dependencies.
+*   \[x\] Containerization with Docker: Moving artefacts to Dockerfile for local testing.
+*   \[x\] Containerization with Docker: Writing a full Dockerfile and publishing image to Docker Hub.
+*   \[x\] Using docker compose for local Dockerfile building.
+*   \[x\] Creating indicators based on badges.
+*   \[x\] Frontend based MD: Integration with Laika via GitHub Actions.
+*   \[x\] Projects separation approach for backend/frontend.
 
-## Модуль 4: Асинхронное программирование и работа с данными
-*   [ ] Асинхронность с Future: Как выполнять долгие операции, не блокируя программу.
-*   [ ] Работа с базами данных: Подключение к PostgreSQL с помощью Doobie.
-*   [ ] Работа с очередями сообщений: Основы Apache Kafka.
+## Module 4: Asynchronous Programming and Data Processing
+*   \[ \] Asynchrony with Future: How to perform long operations without blocking the program.
+*   \[ \] Working with databases: Connecting to PostgreSQL with Doobie.
+*   \[ \] Working with message queues: Apache Kafka basics.
 
-## Модуль 5: Погружение в Блокчейн на Scala
-*   [ ] Клиент Waves на Scala.
-*   [ ] Фреймворк для создания блокчейнов (Scorex).
-*   [ ] EVM-клиент на Scala (Mantis).
+## Module 5: Diving into Blockchain on Scala
+*   \[ \] Waves client on Scala.
+*   \[ \] Blockchain framework (Scorex).
+*   \[ \] EVM client on Scala (Mantis).

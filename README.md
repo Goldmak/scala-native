@@ -1,73 +1,73 @@
-# Проект: HTTP-клиент на Scala Native
+# Project: HTTP Client on Scala Native
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Goldmak_scala-native&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Goldmak_scala-native) [![CI](https://github.com/Goldmak/scala-native/actions/workflows/scala.yml/badge.svg)](https://github.com/Goldmak/scala-native/actions/workflows/scala.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Built with Laika](https://img.shields.io/badge/Built%20with-Laika-blue.svg)](https://laika.site/) [![GitHub Pages deploy](https://github.com/Goldmak/scala-native/actions/workflows/pages.yml/badge.svg)](https://github.com/Goldmak/scala-native/actions/workflows/pages.yml) [![Scala Version](https://img.shields.io/badge/Scala-3.4.2-blue.svg)](https://www.scala-lang.org/) [![Docker Image](https://img.shields.io/docker/v/goodmak/scala-native-hello?label=Docker&sort=semver)](https://hub.docker.com/r/goodmak/scala-native-hello)
 
-Этот проект является простым примером консольного приложения на Scala, скомпилированного в нативный исполняемый файл с помощью Scala Native. Приложение отправляет HTTP GET-запрос, получает и парсит JSON-ответ.
+This project is a simple example of a console application in Scala, compiled into a native executable file using Scala Native. The application sends an HTTP GET request, receives and parses a JSON response.
 
-## Структура Проекта
-Проект организован как мульти-проект `sbt` и состоит из двух основных частей:
-*   **Основное приложение:** Находится в корневой директории и содержит исходный код Scala Native приложения.
-*   **Подпроект документации (`docs`):** Находится в директории `docs/` и используется для генерации статического сайта с помощью Laika.
+## Project Structure
+The project is organized as an `sbt` multi-project and consists of two main parts:
+*   **Main application:** Located in the root directory and contains the Scala Native application source code.
+*   **Documentation subproject (`docs`):** Located in the `docs/` directory and is used to generate a static site using Laika.
 
-## 1. Пререквизиты (Системные требования)
-Для сборки и запуска проекта необходимы следующие инструменты.
+## 1. Prerequisites (System Requirements)
+The following tools are required to build and run the project.
 
-### Bash-скрипт для проверки и установки prereq.sh
-Этот скрипт проверит наличие всех необходимых компонентов и, если вы используете систему на базе Debian/Ubuntu,
-Как использовать: сделай его исполняемым (chmod +x check_prereqs.sh) и запусти (./check_prereqs.sh).
+### Bash script to check and install prereq.sh
+This script will check for all required components and, if you are using a Debian/Ubuntu-based system,
+How to use: make it executable (chmod +x check_prereqs.sh) and run (./check_prereqs.sh).
 
-## 2. Сборка и запуск
-Все команды выполняются из корневой папки проекта.
+## 2. Build and Run
+All commands are executed from the root project folder.
 ```bash
 sbt nativeLink
-./target/scala-3.4.2/scala-native-hello-native
+./target/scala-3.4.2/scala-native-hello
 ```
 
-## 3. Методика отладки типовых ошибок
-### Проблема 1: Ошибка разрешения зависимостей (ResolveException: Not Found)
-**Симптом:** sbt не может скачать библиотеку.
+## 3. Typical Error Debugging Methodology
+### Issue 1: Dependency Resolution Error (ResolveException: Not Found)
+**Symptom:** sbt cannot download the library.
 
-**Причина:** Несовместимость версий "Золотого Трио": Версия Scala + Версия Scala Native + Версия Библиотеки.
+**Cause:** Incompatibility of the "Golden Trio" versions: Scala Version + Scala Native Version + Library Version.
 
-**Решение:**
+**Solution:**
 
-1.  Зайти на Scaladex.
-2.  Найти каждую библиотеку и проверить, какие её версии совместимы с твоей версией Scala (3.x) и Scala Native (0.5).
-3.  Подобрать рабочую комбинацию версий в build.sbt и project/plugins.sbt.
-4.  Убедиться, что для Scala Native зависимостей используется тройной знак процента (%%%).
+1.  Go to Scaladex.
+2.  Find each library and check which versions are compatible with your Scala version (3.x) and Scala Native (0.5).
+3.  Select a working combination of versions in build.sbt and project/plugins.sbt.
+4.  Make sure that for Scala Native dependencies, the triple percent sign (%%%) is used.
 
-### Проблема 2: Ошибки нативной компиляции/компоновки
-**Симптом:** sbt скачал зависимости, но сборка падает с ошибкой от clang или ld.
+### Issue 2: Native Compilation/Linking Errors
+**Symptom:** sbt downloaded dependencies, but the build fails with an error from clang or ld.
 
-**Причина A:** `fatal error: 'some/file.h' file not found`. Это значит, что отсутствует dev-пакет системной библиотеки.
+**Cause A:** `fatal error: 'some/file.h' file not found`. This means that the dev package of the system library is missing.
 
-**Решение:** Найти по имени файла (curl.h -> libcurl) соответствующий dev-пакет (libcurl4-openssl-dev) и установить его через системный менеджер пакетов (sudo apt-get install ...).
+**Solution:** Find the corresponding dev package by file name (curl.h -> libcurl) (libcurl4-openssl-dev) and install it through the system package manager (sudo apt-get install ...).
 
-**Причина B:** `/usr/bin/ld: cannot find -l....` Это значит, что компоновщик не может найти саму системную библиотеку. Часто это "зависимость зависимости".
+**Cause B:** `/usr/bin/ld: cannot find -l....` This means that the linker cannot find the system library itself. This is often a "dependency of a dependency".
 
-**Решение:** По имени (-lidn2 -> libidn2) найти соответствующий dev-пакет (libidn2-dev) и установить его.
+**Solution:** Find the corresponding dev package by name (-lidn2 -> libidn2) (libidn2-dev) and install it.
 
-### Проблема 3: Ошибка бинарной несовместимости (binary-incompatible version of NIR)
-**Симптом:** Глубокая ошибка AssertionError от самого компилятора Scala Native.
+### Issue 3: Binary Incompatibility Error (binary-incompatible version of NIR)
+**Symptom:** Deep AssertionError error from the Scala Native compiler itself.
 
-**Причина:** Конфликт версий между плагином sbt-scala-native и системными библиотеками Scala Native (nativelib, javalib), которые "притащила" одна из зависимостей.
+**Cause:** Version conflict between the sbt-scala-native plugin and Scala Native system libraries (nativelib, javalib) that were "brought" by one of the dependencies.
 
-**Решение:**
+**Solution:**
 
-1.  Посмотреть в логе ошибки, какую версию системной библиотеки он пытается использовать (например, nativelib версии 0.5.8).
-2.  Обновить версию плагина в project/plugins.sbt до этой же версии (0.5.8).
-3.  Если это не помогает, произвести полную очистку кеша: `rm -rf ~/.cache/coursier/`.
+1.  Look in the error log to see which version of the system library it is trying to use (for example, nativelib version 0.5.8).
+2.  Update the plugin version in project/plugins.sbt to the same version (0.5.8).
+3.  If this doesn't help, perform a complete cache cleanup: `rm -rf ~/.cache/coursier/`.
 
-## 4. CI/CD - Непрерывная интеграция
-Этот проект использует GitHub Actions для автоматической сборки, тестирования и анализа кода при каждом изменении. Процесс состоит из двух независимых воркфлоу:
+## 4. CI/CD - Continuous Integration
+This project uses GitHub Actions for automatic build, testing and code analysis with each change. The process consists of two independent workflows:
 
-### Основной воркфлоу (`.github/workflows/scala.yml`)
-Этот воркфлоу отвечает за основное приложение:
-1.  **Установка зависимостей:** Настраивает Java 17, sbt и системные библиотеки, необходимые для Scala Native (clang, libcurl).
-2.  **Запуск тестов:** Выполняет команду `sbt test` для проверки корректности кода.
-3.  **Анализ качества кода:** Запускает сканер SonarCloud для поиска багов, уязвимостей и "кодов с запашком". Результаты анализа доступны на [SonarCloud](https://sonarcloud.io/summary/new_code?id=Goldmak_scala-native) и прямо в Pull Request'ах.
-4.  **Сбор графа зависимостей:** Отправляет информацию о зависимостях проекта в GitHub для отслеживания уязвимостей.
+### Main Workflow (`.github/workflows/scala.yml`)
+This workflow is responsible for the main application:
+1.  **Installing dependencies:** Configures Java 17, sbt and system libraries required for Scala Native (clang, libcurl).
+2.  **Running tests:** Executes the `sbt test` command to verify code correctness.
+3.  **Code quality analysis:** Runs the SonarCloud scanner to find bugs, vulnerabilities and "code smells". Analysis results are available on [SonarCloud](https://sonarcloud.io/summary/new_code?id=Goldmak_scala-native) and directly in Pull Requests.
+4.  **Dependency graph collection:** Sends information about project dependencies to GitHub for vulnerability tracking.
 
-### Воркфлоу для сайта (`.github/workflows/pages.yml`)
-Этот воркфлоу отвечает за сборку и публикацию сайта на GitHub Pages:
-1.  **Генерация сайта:** Запускает команду `cd docs && sbt laikaSite` для генерации HTML-файлов с помощью библиотеки Laika.
-2.  **Публикация:** Автоматически публикует сгенерированные файлы на GitHub Pages.
+### Site Workflow (`.github/workflows/pages.yml`)
+This workflow is responsible for building and publishing the site on GitHub Pages:
+1.  **Site generation:** Runs the `cd docs && sbt laikaSite` command to generate HTML files using the Laika library.
+2.  **Publishing:** Automatically publishes the generated files to GitHub Pages.

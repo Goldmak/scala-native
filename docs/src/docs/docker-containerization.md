@@ -34,8 +34,8 @@ RUN apt-get update && apt-get install -y \
 
 # Устанавливаем sbt
 ENV SBT_VERSION 1.10.7
-RUN curl -L "https://github.com/sbt/sbt/releases/download/v${SBT_VERSION}/sbt-${SBT_VERSION}.tgz" | tar xz -C /usr/local --strip-components=1
-ENV PATH="/usr/local/bin:${PATH}"
+RUN curl -L "https://github.com/sbt/sbt/releases/download/v$ENV_REF_SBT_VERSION/sbt-$ENV_REF_SBT_VERSION.tgz" | tar xz -C /usr/local --strip-components=1
+ENV PATH "/usr/local/bin:$ENV_REF_PATH"
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -64,10 +64,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Копируем нативный исполняемый файл из этапа сборки
-COPY --from=builder /app/target/scala-3.4.2/scala-native-hello-native .
+COPY --from=builder /app/target/scala-3.4.2/scala-native-hello .
 
 # Указываем команду для запуска приложения
-ENTRYPOINT ["/app/scala-native-hello-native"]
+ENTRYPOINT ["/app/scala-native-hello"]
 
 # Опционально: Указываем порт, если приложение является сервером
 # EXPOSE 8080
@@ -77,7 +77,7 @@ ENTRYPOINT ["/app/scala-native-hello-native"]
 
 *   **Этап 1 (builder):** Используется для компиляции. Включает JDK, sbt и все dev-зависимости, необходимые для Scala Native. После сборки этот этап выбрасывается, и в финальный образ попадает только результат.
 *   **Этап 2 (финальный):** Использует минимальный образ (например, `ubuntu:jammy-slim`), так как нативному бинарнику не нужна JVM. Сюда копируются только сам исполняемый файл и необходимые ему рантайм-библиотеки.
-*   **`scala-native-hello-native`:** Замените на актуальное имя вашего исполняемого файла.
+*   **`scala-native-hello`:** Имя исполняемого файла, созданного процессом сборки Scala Native.
 *   **`target/scala-3.4.2/`:** Путь к исполняемому файлу может отличаться в зависимости от версии Scala.
 
 ## Сборка Docker-образа
@@ -125,7 +125,7 @@ docker push ghcr.io/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/scala-native-app:latest 
 enablePlugins(DockerPlugin)
 
 dockerBaseImage := "ubuntu:jammy-slim"
-dockerEntrypoint := Seq("bin/scala-native-hello-native") // Имя вашего бинарника
+dockerEntrypoint := Seq("bin/scala-native-hello") // Имя вашего бинарника
 dockerExposedPorts := Seq(8080) // Если нужно
 dockerRepository := Some("your-docker-username") // Для Docker Hub
 # dockerRepository := Some("ghcr.io/YOUR_GITHUB_USERNAME") // Для GHCR
@@ -141,4 +141,4 @@ dockerRepository := Some("your-docker-username") // Для Docker Hub
 sbt docker:publishLocal # Собрать и сохранить локально
 sbt docker:publish      # Собрать и опубликовать (требует авторизации)
     ```
-Это более интегрированный способ, но требует настройки в `build.sbt`. 
+Это более интегрированный способ, но требует настройки в `build.sbt`.

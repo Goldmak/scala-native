@@ -1,0 +1,17 @@
+# Exclude build artifacts and temporary files
+.scala-build/
+.bloop/
+.bsp/
+.metals/
+.vscode/
+.git/
+
+# Exclude documentation site build artifacts
+docs/.scala-build/
+
+# Exclude IDE files
+*.iml
+*.iws
+*.ipr
+.idea/
+.DS_Store

@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  scala-native-app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.simple
+    image: scala-native-hello:latest

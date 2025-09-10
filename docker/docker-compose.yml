@@ -4,5 +4,5 @@ services:
   scala-native-app:
     build:
       context: .
-      dockerfile: docker/Dockerfile.simple
+      dockerfile: Dockerfile
     image: scala-native-hello:latest

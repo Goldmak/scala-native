@@ -1,20 +1,20 @@
-# --- Этап 1: Создание финального, минимального образа ---
-# Используем минимальный базовый образ
+# --- Stage 1: Create the final minimal image ---
+# Use a minimal base image
 FROM ubuntu:22.04
 
-# Устанавливаем только те системные библиотеки, которые нужны нативному бинарнику
-# (например, libcurl, libidn2, libssl)
+# Install only the system libraries needed by the native binary
+# (e.g., libcurl, libidn2, libssl)
 RUN apt-get update && apt-get install -y \
     libcurl4 \
     libidn2-0 \
     libssl3 \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем рабочую директорию
+# Set working directory
 WORKDIR /app
 
-# Копируем нативный исполняемый файл
+# Copy the native executable
 COPY target/scala-3.4.2/scala-native-hello .
 
-# Указываем команду для запуска приложения
+# Specify the command to run the application
 ENTRYPOINT ["/app/scala-native-hello"]

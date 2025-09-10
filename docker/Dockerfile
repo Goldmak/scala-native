@@ -1,9 +1,9 @@
-# --- Этап 1: Сборка нативного исполняемого файла ---
-# Используем базовый образ с JDK и sbt для сборки
+# --- Stage 1: Build the native executable ---
+# Use a base image with JDK and sbt for building
 FROM eclipse-temurin:17-jdk-jammy AS builder
 
-# Устанавливаем необходимые системные зависимости для Scala Native
-# (например, clang, zlib, libcurl, libidn2, libssl)
+# Install required system dependencies for Scala Native
+# (e.g., clang, zlib, libcurl, libidn2, libssl)
 RUN apt-get update && apt-get install -y \
     clang \
     zlib1g-dev \
@@ -14,43 +14,43 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем sbt
+# Install sbt
 ENV SBT_VERSION=1.10.7
 RUN curl -L "https://github.com/sbt/sbt/releases/download/v${SBT_VERSION}/sbt-${SBT_VERSION}.tgz" | tar xz -C /usr/local --strip-components=1
 ENV PATH="/usr/local/bin:${PATH}"
 
-# Устанавливаем рабочую директорию
+# Clone the repository
+RUN git clone https://github.com/Goldmak/scala-native.git /app
+
+# Change to the application directory
 WORKDIR /app
 
-# Копируем файлы проекта
-COPY . .
-
-# Запускаем сборку нативного исполняемого файла
-# Используем 'sbt nativeLink' для создания нативного бинарника
-# 'sbt clean' для очистки, 'sbt update' для обновления зависимостей
+# Run native executable build
+# Use 'sbt nativeLink' to create the native binary
+# 'sbt clean' for cleaning, 'sbt update' for updating dependencies
 RUN sbt clean update nativeLink
 
-# --- Этап 2: Создание финального, минимального образа ---
-# Используем минимальный базовый образ, так как нативный бинарник не требует JVM
+# --- Stage 2: Create the final minimal image ---
+# Use a minimal base image since the native binary doesn't require JVM
 FROM ubuntu:22.04
 
-# Устанавливаем только те системные библиотеки, которые нужны нативному бинарнику
-# (например, libcurl, libidn2, libssl)
+# Install only the system libraries needed by the native binary
+# (e.g., libcurl, libidn2, libssl)
 RUN apt-get update && apt-get install -y \
     libcurl4 \
     libidn2-0 \
     libssl3 \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем рабочую директорию
+# Set working directory
 WORKDIR /app
 
-# Копируем нативный исполняемый файл из этапа сборки
-# Используем правильный путь к исполняемому файлу (в Docker он называется app)
+# Copy the native executable from the build stage
+# Use the correct path to the executable (named "app" in Docker)
 COPY --from=builder /app/target/scala-3.4.2/app .
 
-# Переименовываем файл для удобства
+# Rename the file for convenience
 RUN mv /app/app /app/scala-native-hello
 
-# Указываем команду для запуска приложения
+# Specify the command to run the application
 ENTRYPOINT ["/app/scala-native-hello"]

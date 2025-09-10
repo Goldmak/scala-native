@@ -1,40 +1,55 @@
 # Docker Containerization for Scala Native Application
 
-This folder contains the Docker configuration to containerize the Scala Native application.
+This folder contains Docker configurations to containerize the Scala Native application. We provide multiple approaches for different use cases.
 
-## Building the Docker Image
+## Dockerfile Approaches
 
-There are two approaches for building the Docker image:
-
-### Approach 1: Multi-stage build (recommended)
-This approach builds the Scala Native executable inside the Docker container:
+### 1. Multi-stage with Git Clone (`Dockerfile`)
+This is the recommended approach for Docker Hub publishing. It clones the repository and builds everything within Docker.
 
 ```bash
-docker build -t scala-native-hello -f docker/Dockerfile .
+docker build -t scala-native-hello .
 ```
 
-### Approach 2: Pre-built executable
-First, you need to build the Scala Native executable locally:
+**Pros:**
+- Fully self-contained, only requires Docker
+- Perfect for Docker Hub automated builds
+- Always builds from the latest source code in the repository
+- Reproducible builds anywhere
+- No dependency on local build artifacts
 
+**Cons:**
+- Longer build time (needs to clone repo and build)
+- Requires internet access during build
+- Larger image size due to build dependencies
+
+### 2. Pre-built Executable (`Dockerfile.simple`)
+This approach uses a pre-built executable that you compile locally.
+
+First, build the Scala Native executable locally:
 ```bash
 sbt nativeLink
 ```
 
-Then build the Docker image using the simple Dockerfile:
-
+Then build the Docker image:
 ```bash
-docker build -t scala-native-hello -f docker/Dockerfile.simple .
+docker build -t scala-native-hello -f Dockerfile.simple .
 ```
 
-Alternatively, you can use docker-compose:
+**Pros:**
+- Fastest build time
+- Smallest image size
+- Works without internet during Docker build
 
-```bash
-docker-compose -f docker/docker-compose.yml build
-```
+**Cons:**
+- Requires local build step first
+- Not suitable for Docker Hub automated builds
+- Not reproducible without the local environment
+- Dependent on local build artifacts
 
 ## Running the Docker Container
 
-After building the image, you can run the application in a container:
+After building any of the images, you can run the application in a container:
 
 ```bash
 docker run --rm scala-native-hello
@@ -43,16 +58,21 @@ docker run --rm scala-native-hello
 Or with docker-compose:
 
 ```bash
-docker-compose -f docker/docker-compose.yml run --rm scala-native-app
+docker-compose -f docker-compose.yml run --rm scala-native-app
 ```
 
-## How it Works
+## Docker Hub Publishing Recommendation
 
-### Multi-stage approach:
-1. **Builder Stage**: Uses a JDK image with sbt and Scala Native dependencies to compile the application
-2. **Runtime Stage**: Copies the native executable to a minimal Ubuntu image and installs only the required system libraries
+For publishing to Docker Hub, we recommend using the `Dockerfile` approach (multi-stage with git clone) because:
 
-### Pre-built executable approach:
-1. **Runtime Stage**: Uses a minimal Ubuntu image and copies the pre-built native executable
+1. **Docker Hub Compatibility**: Docker Hub automated builds work by cloning the repository and running Dockerfile instructions
+2. **Reproducibility**: Anyone can build the exact same image by running the same Dockerfile
+3. **Self-contained**: The build process is entirely contained within the Dockerfile
+4. **Version Control**: The Docker image is always built from the source code in the repository
 
-Both approaches result in a small, efficient container that doesn't require a JVM to run.
+## Image Sizes
+
+- Multi-stage with Git Clone: ~104MB
+- Pre-built Executable: ~94MB
+
+The slight increase in image size for the multi-stage approach is a reasonable trade-off for the benefits of having a fully automated, reproducible build process that works with Docker Hub's infrastructure.
